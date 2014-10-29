@@ -84,31 +84,23 @@ def main():
             print ("%s\t%s\t%s\t%s\t%s" % (name,start,end,gc_content,gc_skew))
 			
             pos_array.append(start)
-            gc_skew_value_array.append(gc_skew)
             gc_content_value_array.append(gc_content)
+            gc_skew_value_array.append(gc_skew)
 
-        plt.subplot(2,1,1)
-        plt.fill(pos_array,gc_content_value_array,'r.-')
-        plt.xlabel('Genome Position')
-        plt.ylabel('GC content')
-        plt.subplot(2,1,2)
-        plt.fill(pos_array,gc_skew_value_array,'b.-')
-        plt.xlabel('Genome Position')
-        plt.ylabel('GC skew')
-        plt.show()
+        my_plot(pos_array,gc_content_value_array,gc_skew_value_array)
 
-"""    
-        start = np.array(start)
-        end = np.array(end)
-        gc = np.array(gc)
-        gc_skew = np.array(gc_skew)
-        plt.fill(start,gc,'r.-')
-        plt.fill(start,gc_skew,'g.-')
-        plt.ylabel('Genome position')
-        plt.grid(True)
-        plt.show()
 
-"""
+
+def my_plot(pos,gccontent,gcskew):
+    plt.subplot(2,1,1)
+    plt.plot(pos,gccontent,'r.-')
+    plt.xlabel('Genome Position')
+    plt.ylabel('GC content')
+    plt.subplot(2,1,2)
+    plt.plot(pos,gcskew,'b.-')
+    plt.xlabel('Genome Position')
+    plt.ylabel('GC skew')
+    plt.show()
 
 if __name__ == '__main__':
     main()
