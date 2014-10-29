@@ -13,16 +13,18 @@ __email__ = "linwenchao@yeah.net"
 from Bio import SeqIO
 import sys
 from optparse import OptionParser
+import numpy as np
+from matplotlib import pyplot as plt
 
-def GC_window(s):
+def GC_content_window(s):
     
     """
     Return GC content of input sequence
     """
 
     gc = sum(s.count(x) for x in ['G','C','g','c','S','s'])
-    gc = gc/float(len(s))
-    return round(gc,4) 
+    gc_content = gc/float(len(s))
+    return round(gc_content,4) 
 
 
 def GC_skew_window(s):
@@ -59,6 +61,9 @@ def main():
     seqobj = SeqIO.parse(options.filename,'fasta')
 
     for record in seqobj: 
+        pos_array = []
+        gc_content_value_array = []
+        gc_skew_value_array = []
         name = record.id
         seq = record.seq
         start = 0
@@ -68,12 +73,29 @@ def main():
 
         for i in range(0,len(seq),step):
             subseq = seq[i:i+window]
-            gc = (GC_window(subseq))
+            gc_content = (GC_content_window(subseq))
             gc_skew = (GC_skew_window(subseq))
+
+
+			
 
             start = (i + 1 if (i+1<=len(seq)) else i)
             end = ( i + step if (i+ step<=len(seq)) else len(seq))
-            print ("%s\t%s\t%s\t%s\t%s" % (name,start,end,gc,gc_skew))
+            print ("%s\t%s\t%s\t%s\t%s" % (name,start,end,gc_content,gc_skew))
+			
+            pos_array.append(start)
+            gc_skew_value_array.append(gc_skew)
+            gc_content_value_array.append(gc_content)
+
+        plt.subplot(2,1,1)
+        plt.fill(pos_array,gc_content_value_array,'r.-')
+        plt.xlabel('Genome Position')
+        plt.ylabel('GC content')
+        plt.subplot(2,1,2)
+        plt.fill(pos_array,gc_skew_value_array,'b.-')
+        plt.xlabel('Genome Position')
+        plt.ylabel('GC skew')
+        plt.show()
 
 """    
         start = np.array(start)
