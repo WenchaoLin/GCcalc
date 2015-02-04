@@ -76,31 +76,10 @@ def main():
             gc_content = (GC_content_window(subseq))
             gc_skew = (GC_skew_window(subseq))
 
-
-			
-
             start = (i + 1 if (i+1<=len(seq)) else i)
             end = ( i + step if (i+ step<=len(seq)) else len(seq))
             print ("%s\t%s\t%s\t%s\t%s" % (name,start,end,gc_content,gc_skew))
 			
-            pos_array.append(start)
-            gc_content_value_array.append(gc_content)
-            gc_skew_value_array.append(gc_skew)
-
-        my_plot(pos_array,gc_content_value_array,gc_skew_value_array)
-
-
-
-def my_plot(pos,gccontent,gcskew):
-    plt.subplot(2,1,1)
-    plt.plot(pos,gccontent,'r.-')
-    plt.xlabel('Genome Position')
-    plt.ylabel('GC content')
-    plt.subplot(2,1,2)
-    plt.plot(pos,gcskew,'b.-')
-    plt.xlabel('Genome Position')
-    plt.ylabel('GC skew')
-    plt.show()
 
 if __name__ == '__main__':
     main()
