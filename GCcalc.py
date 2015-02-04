@@ -14,7 +14,6 @@ from Bio import SeqIO
 import sys
 from optparse import OptionParser
 import numpy as np
-from matplotlib import pyplot as plt
 
 def GC_content_window(s):
     
@@ -75,11 +74,10 @@ def main():
             subseq = seq[i:i+window]
             gc_content = (GC_content_window(subseq))
             gc_skew = (GC_skew_window(subseq))
-
             start = (i + 1 if (i+1<=len(seq)) else i)
             end = ( i + step if (i+ step<=len(seq)) else len(seq))
             print ("%s\t%s\t%s\t%s\t%s" % (name,start,end,gc_content,gc_skew))
-			
+	
 
 if __name__ == '__main__':
     main()
